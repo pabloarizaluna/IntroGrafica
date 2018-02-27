@@ -11,12 +11,12 @@ void myInit (void){
 
 void myDisplay (void)
 {
-    std::vector<GLfloat> color = {0.0, 0.0, 0.0};
+    std::vector<GLfloat> color = {0.54, 0.17, 0.89};
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(0.54, 0.17, 0.89);
 
     //left leg
     //foot
@@ -90,8 +90,75 @@ void myDisplay (void)
         glVertex2f(192, 252);
         glVertex2f(188, 272);
     glEnd();
-
     //end right leg
+
+    //body
+    glBegin(GL_TRIANGLES);
+        glVertex2f(180, 284);
+        glVertex2f(160, 400);
+        glVertex2f(200, 400);
+        glVertex2f(160, 400);
+        glVertex2f(200, 400);
+        glVertex2f(180, 420);
+    glEnd();
+    //endbody
+
+    drawCircle(180, 430, 10, color);
+
+    //head
+    glBegin(GL_TRIANGLES);
+        glVertex2f(180, 440);
+        glVertex2f(172, 488);
+        glVertex2f(188, 488);
+        glVertex2f(172, 488);
+        glVertex2f(188, 488);
+        glVertex2f(180, 496);
+    glEnd();
+    //endhead
+
+    //right arm
+    glBegin(GL_TRIANGLES);
+        glVertex2f(170, 430);
+        glVertex2f(144, 432);
+        glVertex2f(152, 408);
+        glVertex2f(144, 432);
+        glVertex2f(152, 408);
+        glVertex2f(72, 344);
+    glEnd();
+
+    drawCircle(70, 334, 10, color);
+
+    glBegin(GL_TRIANGLES);
+        glVertex2f(70, 324);
+        glVertex2f(60, 312);
+        glVertex2f(80, 312);
+        glVertex2f(60, 312);
+        glVertex2f(80, 312);
+        glVertex2f(70, 274);
+    glEnd();
+    //end right arm
+
+    //left arm
+    glBegin(GL_TRIANGLES);
+        glVertex2f(190, 430);
+        glVertex2f(216, 432);
+        glVertex2f(208, 408);
+        glVertex2f(216, 432);
+        glVertex2f(208, 408);
+        glVertex2f(288, 344);
+    glEnd();
+
+    drawCircle(290, 334, 10, color);
+
+    glBegin(GL_TRIANGLES);
+        glVertex2f(290, 324);
+        glVertex2f(300, 312);
+        glVertex2f(280, 312);
+        glVertex2f(300, 312);
+        glVertex2f(280, 312);
+        glVertex2f(290, 274);
+    glEnd();
+    //end left arm
 
     glFlush();
 }

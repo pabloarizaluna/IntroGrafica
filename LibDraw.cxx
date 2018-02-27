@@ -76,50 +76,106 @@ void drawSym4Pixel(int x, int x_c, int y, int y_c)
 
 void drawCircle(int x_c, int y_c, int r)
 {
+    std::vector<std::vector<int>> points;
     float p_k = (5.0 / 4.0) - r;
     int x = 0, y = r;
 
-    drawSym8Pixel(x, x_c, y, y_c);
+    points.push_back({x + x_c, y + y_c});
+    points.push_back({y + x_c, x + y_c});
+    points.push_back({y + x_c, -x + y_c});
+    points.push_back({x + x_c, -y + y_c});
+    points.push_back({-x + x_c, y + y_c});
+    points.push_back({-y + x_c, x + y_c});
+    points.push_back({-y + x_c, -x + y_c});
+    points.push_back({-x + x_c, -y + y_c});
 
     while(x < y)
     {
         if(p_k < 0)
         {
             x++;
-            drawSym8Pixel(x, x_c, y, y_c);
+            points.push_back({x + x_c, y + y_c});
+            points.push_back({y + x_c, x + y_c});
+            points.push_back({y + x_c, -x + y_c});
+            points.push_back({x + x_c, -y + y_c});
+            points.push_back({-x + x_c, y + y_c});
+            points.push_back({-y + x_c, x + y_c});
+            points.push_back({-y + x_c, -x + y_c});
+            points.push_back({-x + x_c, -y + y_c});
             p_k =  p_k + (2 * x) + 1;
         }
         else
         {
             x++; y--;
-            drawSym8Pixel(x, x_c, y, y_c);
+            points.push_back({x + x_c, y + y_c});
+            points.push_back({y + x_c, x + y_c});
+            points.push_back({y + x_c, -x + y_c});
+            points.push_back({x + x_c, -y + y_c});
+            points.push_back({-x + x_c, y + y_c});
+            points.push_back({-y + x_c, x + y_c});
+            points.push_back({-y + x_c, -x + y_c});
+            points.push_back({-x + x_c, -y + y_c});
             p_k =  p_k + (2 * x) + 1 - (2 * y);
         }
     }
+
+    glBegin(GL_POLYGON);
+      for(int i = 0; i < points.size(); i++)
+        glVertex2i(points[i][0], points[i][1]);
+    glEnd();
 }
 
 void drawCircle(int x_c, int y_c, int r, std::vector<GLfloat> color)
 {
+    std::vector<std::vector<int>> points;
     float p_k = (5.0 / 4.0) - r;
     int x = 0, y = r;
 
-    drawSym8Pixel(x, x_c, y, y_c, color);
+    points.push_back({x + x_c, y + y_c});
+    points.push_back({y + x_c, x + y_c});
+    points.push_back({y + x_c, -x + y_c});
+    points.push_back({x + x_c, -y + y_c});
+    points.push_back({-x + x_c, y + y_c});
+    points.push_back({-y + x_c, x + y_c});
+    points.push_back({-y + x_c, -x + y_c});
+    points.push_back({-x + x_c, -y + y_c});
 
     while(x < y)
     {
         if(p_k < 0)
         {
             x++;
-            drawSym8Pixel(x, x_c, y, y_c, color);
+            points.push_back({x + x_c, y + y_c});
+            points.push_back({y + x_c, x + y_c});
+            points.push_back({y + x_c, -x + y_c});
+            points.push_back({x + x_c, -y + y_c});
+            points.push_back({-x + x_c, y + y_c});
+            points.push_back({-y + x_c, x + y_c});
+            points.push_back({-y + x_c, -x + y_c});
+            points.push_back({-x + x_c, -y + y_c});
             p_k =  p_k + (2 * x) + 1;
         }
         else
         {
             x++; y--;
-            drawSym8Pixel(x, x_c, y, y_c, color);
+            points.push_back({x + x_c, y + y_c});
+            points.push_back({y + x_c, x + y_c});
+            points.push_back({y + x_c, -x + y_c});
+            points.push_back({x + x_c, -y + y_c});
+            points.push_back({-x + x_c, y + y_c});
+            points.push_back({-y + x_c, x + y_c});
+            points.push_back({-y + x_c, -x + y_c});
+            points.push_back({-x + x_c, -y + y_c});
             p_k =  p_k + (2 * x) + 1 - (2 * y);
         }
     }
+
+    glColor3f(color[0], color[1], color[2]);
+
+    glBegin(GL_TRIANGLE_STRIP);
+      for(int i = 0; i < points.size(); i++)
+        glVertex2i(points[i][0], points[i][1]);
+    glEnd();
 }
 
 
