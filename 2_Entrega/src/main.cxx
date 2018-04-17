@@ -3,7 +3,11 @@
 GLfloat width;
 GLfloat height;
 
-GLdouble eyeX = 5000, eyeY = 5000, eyeZ = 5000;
+/*GLdouble eyeX = 5000, eyeY = 5000, eyeZ = 5000;
+GLdouble centerX = 0, centerY = 0, centerZ = 0;
+GLdouble upX = 0, upY = 1, upZ = 0;*/
+
+GLdouble eyeX = -5000, eyeY = -5000, eyeZ = -5000;
 GLdouble centerX = 0, centerY = 0, centerZ = 0;
 GLdouble upX = 0, upY = 1, upZ = 0;
 
