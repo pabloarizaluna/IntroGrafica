@@ -132,11 +132,14 @@ void draw_window(
   glPopMatrix();
 }
 
-void drawLimb( float x, float y, float z, float angle, char axis, int base, int height ) {
-    glColor3f( 1.0f, 0.0f, 0.0f );
+void drawLimb( float x, float y, float z, float angle, char axis, int base, int height, bool needsMarker ) {
     glPushMatrix( );
 
     glTranslatef( x, y, z );
+    if( needsMarker == true ) {
+        glColor3f( 0.0f, 1.0f, 0.0f );
+        glutWireSphere( 50, 10, 10 );
+    }
 
     if( axis == 'x' ) {
         glRotatef( angle, 1.0f, 0.0f, 0.0f );
@@ -150,7 +153,7 @@ void drawLimb( float x, float y, float z, float angle, char axis, int base, int 
 
     glRotatef( 90.0, 0.0, 1.0, 0.0 );
 
-
+    glColor3f( 1.0f, 0.0f, 0.0f );
     glutWireCone( base, height/3, 20, 20 );
 
     glRotatef( 180.0, 0.0f, 1.0f, 0.0f );
@@ -172,31 +175,43 @@ void drawSphere( float x, float y, float z, int radius ) {
 }
 
 void draw_subject( float x, float y, float z ) {
-    drawLimb( 0.0 + x, 500.0 + y, 0.0 + z, 90.0, 'z', 250, 750 );
+    // Head
+    drawLimb( 0.0 + x, 500.0 + y, 0.0 + z, 90.0, 'z', 250, 750, false );
     drawSphere( 0.0 + x, 0.0 + y, 0.0 + z, 50 );
 
-    drawLimb( -288.0 + x, -167.0 + y, 0.0 + z, 30.0, 'z', 100, 1000 );
+    // Right Arm
+    drawLimb( -288.0 + x, -167.0 + y, 0.0 + z, 30.0, 'z', 100, 1000, false );
     drawSphere( -866.0 + x, -500.0 + y, 0.0 + z, 50 );
-    drawLimb( -866.0 + x, -750.0 + y, 0.0 + z, 90.0, 'z', 100, 750 );
+    drawLimb( -866.0 + x, -750.0 + y, 0.0 + z, 90.0, 'z', 100, 750, false );
     drawSphere( -866.0 + x, -1250.0 + y, 0.0 + z, 50 );
 
-    drawLimb( 288.0 + x, -167.0 + y, 0.0 + z, 150.0, 'z', 100, 1000 );
+    // Left Arm
+    drawLimb( 288.0 + x, -167.0 + y, 0.0 + z, 150.0, 'z', 100, 1000, false );
     drawSphere( 866.0 + x, -500.0 + y, 0.0 + z, 50 );
-    drawLimb( 866.0 + x, -750.0 + y, 0.0 + z, 90.0, 'z', 100, 750 );
+    drawLimb( 866.0 + x, -750.0 + y, 0.0 + z, 90.0, 'z', 100, 750, false );
     drawSphere( 866 + x, -1250.0 + y, 0.0 + z, 50 );
 
-    drawLimb( 0.0 + x, -500.0 + y, 0.0 + z, 90.0, 'z', 300, 1500 );
+    // Chest
+    drawLimb( 0.0 + x, -500.0 + y, 0.0 + z, 90.0, 'z', 300, 1500, false );
     drawSphere( 0.0 + x, -1500.0 + y, 0.0 + z, 50 );
 
-    drawLimb( -239.0 + x, -1842.0 + y, 0.0 + z, 55.0, 'z', 175, 1250 );
-    drawSphere( -717.0 + x, -2524.0 + y, 0.0 + z, 50 );
-    drawLimb( -717.0 + x, -2857.0 + y, 0.0 + z, 90.0, 'z', 125, 1000 );
-    drawSphere( -717.0 + x, -3524.0 + y, 0.0 + z, 50 );
-    drawLimb( -717.0 + x, -3524.0 + y, -133.0 + z, 270.0, 'y', 75, 400 );
+    // Pelvis
+    drawSphere( -100.0 + x, -1400.0 + y, 50.0 + z, 50 );
+    drawSphere( 100.0 + x, -1400.0 + y, 50.0 + z, 50 );
+    drawSphere( -250.0 + x, -1600.0 + y, -50.0 + z, 50 );
+    drawSphere( 250.0 + x, -1600.0 + y, -50.0 + z, 50 );
 
-    drawLimb( 239.0 + x, -1842.0 + y, 0.0, 125.0 + z, 'z', 175, 1250 );
+    // Right Leg
+    drawLimb( -239.0 + x, -1842.0 + y, 0.0 + z, 55.0, 'z', 175, 1250, true );
+    drawSphere( -717.0 + x, -2524.0 + y, 0.0 + z, 50 );
+    drawLimb( -717.0 + x, -2857.0 + y, 0.0 + z, 90.0, 'z', 125, 1000, true );
+    drawSphere( -717.0 + x, -3524.0 + y, 0.0 + z, 50 );
+    drawLimb( -717.0 + x, -3524.0 + y, -133.0 + z, 270.0, 'y', 75, 400, true );
+
+    // Left Leg
+    drawLimb( 239.0 + x, -1842.0 + y, 0.0, 125.0 + z, 'z', 175, 1250, true );
     drawSphere( 717.0 + x, -2524.0 + y, 0.0 + z, 50 );
-    drawLimb( 717.0 + x, -2857.0 + y, 0.0 + z, 90.0, 'z', 125, 1000 );
+    drawLimb( 717.0 + x, -2857.0 + y, 0.0 + z, 90.0, 'z', 125, 1000, true );
     drawSphere( 717.0 + x, -3524.0 + y, 0.0 + z, 50 );
-    drawLimb( 717.0 + x, -3524.0 + y, -133.0 + z, 270.0, 'y', 75, 400 );
+    drawLimb( 717.0 + x, -3524.0 + y, -133.0 + z, 270.0, 'y', 75, 400, true );
 }

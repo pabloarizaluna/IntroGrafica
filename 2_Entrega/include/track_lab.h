@@ -24,7 +24,7 @@ void draw_door(
 void draw_window(
   GLfloat x, GLfloat y, GLfloat z, GLfloat width, GLfloat height, GLfloat depth
   );
-void drawLimb( float x, float y, float z, float angle, char axis, int base, int height );
+void drawLimb( float x, float y, float z, float angle, char axis, int base, int height, bool needsMarker );
 void drawSphere( float x, float y, float z, int radius );
 void draw_subject( float x, float y, float z );
 
