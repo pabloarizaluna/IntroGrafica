@@ -3,7 +3,7 @@
 #include <GL/freeglut.h>
 #include <GL/gl.h>
 
-bool paused = false;
+int paused = 0;
 
 GLfloat width;
 GLfloat height;
@@ -20,7 +20,7 @@ GLdouble eye_2_X = 5000, eye_2_Y = 800, eye_2_Z = 700;
 GLdouble center_2_X = -224.5, center_2_Y = 800, center_2_Z = 700;
 GLdouble up_2_X = 0, up_2_Y = 0, up_2_Z = 1;
 
-GLdouble eye_3_X = -1461, eye_3_Y = -526, eye_3_Z = 5000;
+GLdouble eye_3_X = 1461, eye_3_Y = 526, eye_3_Z = 5000;
 GLdouble center_3_X = 1461, center_3_Y = 526, center_3_Z = 0;
 GLdouble up_3_X = 0, up_3_Y = 1, up_3_Z = 0;
 
@@ -42,18 +42,20 @@ void display()
   gluLookAt( eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ );
 
   glPushMatrix();
+  glColor3f( 0, 1, 1 );
+  glBegin( GL_QUADS );
+    glVertex3i( -475, 329, 5 );
+    glVertex3i( -475, 949, 5 );
+    glVertex3i( 3495, 949, 5 );
+    glVertex3i( 3495, 329, 5 );
+  glEnd();
+  glPopMatrix();
+
+  glPushMatrix();
   glColor3f( 0, 1, 0 );
   glTranslatef( 26, 494, 59 );
   glScalef( 50, 50, 50 );
   glutSolidSphere( 1.0,  20.0,  20.0 );
-  //glScalef( 2.541,51, 5 );
-  //glutSolidCube( 1.0 );
-  /*glBegin( GL_QUADS );
-    glVertex3i();
-    glVertex3i();
-    glVertex3i();
-    glVertex3i();
-  glEnd();*/
   glPopMatrix();
 
   glPushMatrix();
@@ -92,6 +94,9 @@ void display()
   glScalef( 50, 50, 50 );
   glutSolidSphere( 1.0,  20.0,  20.0 );
   glPopMatrix();
+
+  glRotatef( 90, 1, 0, 0 );
+  draw_room( 1454, 639, 490, 2.327, 1.485, 1.98 );
 
   glutSwapBuffers();
 }
@@ -160,7 +165,8 @@ void keyboard( unsigned char key, int x, int y )
       upZ = up_3_Z;
     break;
     case 'p': case 'P':
-      paused = true;
+      paused = ( paused + 1 ) % 2;
+      std::cout << paused << std::endl;
     break;
   }
 

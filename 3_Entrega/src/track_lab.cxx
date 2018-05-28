@@ -21,14 +21,6 @@ void draw_room(
   glutWireCube( 1.0 );
   glPopMatrix();
 
-  glPushMatrix();
-  glColor3fv( blue );
-
-  glTranslatef( x - width * 0.25, y - height * 0.5, z );
-  glScalef( width * 0.2, 100.0, depth * 0.75 );
-  glutSolidCube( 1.0 );
-  glPopMatrix();
-
   //left
   draw_walls(
     x - width * 0.5, y, z - height * 0.25, 800.0, height, depth * 0.25
