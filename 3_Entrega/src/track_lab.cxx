@@ -1,5 +1,7 @@
 #include "track_lab.h"
 
+std::vector< std::vector< std::vector< GLfloat > > > vertices;
+
 void draw_room(
   GLfloat x, GLfloat y, GLfloat z, GLfloat width, GLfloat height, GLfloat depth
   )
@@ -153,12 +155,12 @@ void drawLimb( float x, float y, float z, float angle, char axis, int base, int 
 }
 
 void drawSphere( float x, float y, float z, int radius ) {
-    glColor3f( 1.0, 1.0, 0.0 );
+    glColor3f( 1.0, 0.0, 1.0 );
     glPushMatrix( );
 
     glTranslatef( x, y, z );
 
-    glutWireSphere( radius, 10, 10 );
+    glutWireSphere( radius, 20, 20 );
 
     glPopMatrix( );
 }
@@ -194,10 +196,22 @@ void draw_subject( float x, float y, float z ) {
 }
 
 void drawMarkers( int actualIt ) {
-    if( actualIt < vertices.size( ) ) {
+    if( actualIt < vertices[ 0 ].size( ) ) {
         for( int i = 0; i < vertices.size( ); i++ ) {
-            drawSphere( vertices[ i ][ actualIt ][ 0 ], vertices[ i ][ actualIt ][ 1 ], vertices[ i ][ actualIt ][ 2 ] );
+            drawSphere( vertices[ i ][ actualIt ][ 0 ], vertices[ i ][ actualIt ][ 1 ], vertices[ i ][ actualIt ][ 2 ], 20 );
         }
+    }
+}
+
+void verifyMarkers( ) {
+    for( int i = 0; i < vertices.size( ); i++ ) {
+        std::vector< std::vector< GLfloat > > v = vertices[ i ];
+
+        for( int j = 0; j < v.size( ); j++ ) {
+            std::cout << v[ j ][ 0 ] << " " << v[ j ][ 1 ] << " " << v[ j ][ 2 ] << std::endl;
+        }
+
+        std::cout << " Cambio de Hueso " << std::endl;
     }
 }
 
@@ -227,11 +241,12 @@ void loadFile( ) {
 
                 vertics.push_back( verts );
             }
-            else if( vertics.size( ) == 0 ) {
+            else if( vertics.size( ) != 0 ) {
                 vertices.push_back( vertics );
                 vertics.clear( );
             }
         }
+        vertices.push_back( vertics );
         file.close( );
       }
       else {

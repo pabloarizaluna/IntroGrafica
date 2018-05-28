@@ -2,13 +2,13 @@
 
 #include <GL/freeglut.h>
 #include <GL/gl.h>
+#include "track_lab.h"
 
 int paused = 0;
 
 GLfloat width;
 GLfloat height;
 GLfloat iteration;
-bool running = true;
 
 GLdouble eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ;
 
@@ -26,6 +26,7 @@ GLdouble up_3_X = 0, up_3_Y = 1, up_3_Z = 0;
 
 void init()
 {
+    loadFile( );
     iteration = 0;
   glClearColor( 1.0, 1.0, 1.0, 0.0 );
   width = 680;
@@ -51,50 +52,6 @@ void display()
   glEnd();
   glPopMatrix();
 
-  glPushMatrix();
-  glColor3f( 0, 1, 0 );
-  glTranslatef( 26, 494, 59 );
-  glScalef( 50, 50, 50 );
-  glutSolidSphere( 1.0,  20.0,  20.0 );
-  glPopMatrix();
-
-  glPushMatrix();
-  glColor3f( 0.0, 1, 0 );
-  glTranslatef( 2744, 603, 17 );
-  glScalef( 50, 50, 50 );
-  glutSolidSphere( 1.0,  20.0,  20.0 );
-  glPopMatrix();
-
-  //ltoe
-  glPushMatrix();
-  glColor3f( 0.0, 0.0, 1.0 );
-  glTranslatef( -475, 592, 18 );
-  glScalef( 50, 50, 50 );
-  glutSolidSphere( 1.0,  20.0,  20.0 );
-  glPopMatrix();
-
-  glPushMatrix();
-  glColor3f( 0.0, 0.0, 1.0 );
-  glTranslatef( 3383, 789, 12 );
-  glScalef( 50, 50, 50 );
-  glutSolidSphere( 1.0,  20.0,  20.0 );
-  glPopMatrix();
-
-  //SACR
-  glPushMatrix();
-  glColor3f( 1.0, 0, 0 );
-  glTranslatef( -480, 526, 954 );
-  glScalef( 50, 50, 50 );
-  glutSolidSphere( 1.0,  20.0,  20.0 );
-  glPopMatrix();
-
-  glPushMatrix();
-  glColor3f( 1.0, 0.5, 0 );
-  glTranslatef( 3215, 709, 968 );
-  glScalef( 50, 50, 50 );
-  glutSolidSphere( 1.0,  20.0,  20.0 );
-  glPopMatrix();
-
   glRotatef( 90, 1, 0, 0 );
   draw_room( 1454, 639, 490, 2.327, 1.485, 1.98 );
 
@@ -116,12 +73,12 @@ void reshape(int n_width, int n_height)
 }
 
 void timer( int value ) {
-    if( running ) {
+    if( !paused ) {
         iteration += 1;
     }
 
     glutPostRedisplay( );
-    glutTimerFunc( 1000.0 / 60.0, timer, 0 );
+    glutTimerFunc( 1000.0/ 60.0, timer, 0 );
 }
 
 void keyboard( unsigned char key, int x, int y )
@@ -167,6 +124,9 @@ void keyboard( unsigned char key, int x, int y )
     case 'p': case 'P':
       paused = ( paused + 1 ) % 2;
       std::cout << paused << std::endl;
+    break;
+    case 'r': case 'R':
+        iteration = 0;
     break;
   }
 
