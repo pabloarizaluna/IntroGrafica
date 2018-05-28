@@ -3,6 +3,8 @@
 
 GLfloat width;
 GLfloat height;
+GLfloat iteration;
+bool running = true;
 
 GLdouble eye_1_X = 5000, eye_1_Y = 5000, eye_1_Z = 5000;
 GLdouble center_1_X = 0, center_1_Y = 0, center_1_Z = 0;
@@ -18,6 +20,7 @@ GLdouble up_3_X = 0, up_3_Y = 1, up_3_Z = 0;
 
 void init()
 {
+    iteration = 0;
   glClearColor( 0.0, 0.0, 0.0, 0.0 );
   width = 680;
   height = 480;
@@ -55,6 +58,14 @@ void reshape(int n_width, int n_height)
   height = n_height;
 }
 
+void timer( int value ) {
+    if( running ) {
+        iteration += 1;
+    }
+
+    glutPostRedisplay( );
+    glutTimerFunc( 1000.0 / 60.0, timer, 0 );
+}
 
 int main( int argc, char* argv[] )
 {
@@ -66,6 +77,7 @@ int main( int argc, char* argv[] )
   init();
   glutDisplayFunc( display );
   glutReshapeFunc( reshape );
+  glutTimerFunc( 1000.0 / 60.0, timer, 0 );
   glutMainLoop();
 
   return 0;
