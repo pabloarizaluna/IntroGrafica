@@ -8,6 +8,8 @@ bool paused = false;
 GLfloat width;
 GLfloat height;
 
+GLdouble eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ;
+
 GLdouble eye_1_X = 1461.0, eye_1_Y = -5000.0, eye_1_Z = 483.0;
 GLdouble center_1_X = 1461, center_1_Y = 0, center_1_Z = 483;
 GLdouble up_1_X = 0, up_1_Y = 0, up_1_Z = 1;
@@ -31,6 +33,10 @@ void init()
 void display()
 {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+  glLoadIdentity();
+
+  gluLookAt( eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ );
 
   glPushMatrix();
   glColor3f( 0, 1, 0 );
@@ -109,20 +115,43 @@ void keyboard( unsigned char key, int x, int y )
       exit(0);
     break;
     case '1':
-      std::cout << "ntro 1" << std::endl;
-      gluLookAt( eye_1_X, eye_1_Y, eye_1_Z, center_1_X, center_1_Y, center_1_Z, up_1_X, up_1_Y, up_1_Z );
+      eyeX = eye_1_X;
+      eyeY = eye_1_Y;
+      eyeZ = eye_1_Z;
+      centerX = center_1_X;
+      centerY = center_1_Y;
+      centerZ = center_1_Z;
+      upX = up_1_X;
+      upY = up_1_Y;
+      upZ = up_1_Z;
     break;
     case '2':
-      gluLookAt( eye_2_X, eye_2_Y, eye_2_Z, center_2_X, center_2_Y, center_2_Z, up_2_X, up_2_Y, up_2_Z );
+      eyeX = eye_2_X;
+      eyeY = eye_2_Y;
+      eyeZ = eye_2_Z;
+      centerX = center_2_X;
+      centerY = center_2_Y;
+      centerZ = center_2_Z;
+      upX = up_2_X;
+      upY = up_2_Y;
+      upZ = up_2_Z;
     break;
     case '3':
-      gluLookAt( eye_3_X, eye_3_Y, eye_3_Z, center_3_X, center_3_Y, center_3_Z, up_3_X, up_3_Y, up_3_Z );
+      eyeX = eye_3_X;
+      eyeY = eye_3_Y;
+      eyeZ = eye_3_Z;
+      centerX = center_3_X;
+      centerY = center_3_Y;
+      centerZ = center_3_Z;
+      upX = up_3_X;
+      upY = up_3_Y;
+      upZ = up_3_Z;
     break;
     case 'p': case 'P':
       paused = true;
     break;
   }
-  
+
   glutPostRedisplay();
 }
 
