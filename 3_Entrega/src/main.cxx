@@ -2,6 +2,7 @@
 
 #include <GL/freeglut.h>
 #include <GL/gl.h>
+#include "track_lab.h"
 
 bool paused = false;
 
@@ -86,6 +87,8 @@ void display()
   glScalef( 50, 50, 50 );
   glutSolidSphere( 1.0,  20.0,  20.0 );
   glPopMatrix();
+
+  drawMarkers( iteration );
 
   glutSwapBuffers();
 }

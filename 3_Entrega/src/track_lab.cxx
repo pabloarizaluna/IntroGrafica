@@ -1,5 +1,7 @@
 #include "track_lab.h"
 
+std::vector< std::vector< std::vector< GLfloat > > > vertices;
+
 void draw_room(
   GLfloat x, GLfloat y, GLfloat z, GLfloat width, GLfloat height, GLfloat depth
   )
@@ -204,7 +206,7 @@ void draw_subject( float x, float y, float z ) {
 void drawMarkers( int actualIt ) {
     if( actualIt < vertices.size( ) ) {
         for( int i = 0; i < vertices.size( ); i++ ) {
-            drawSphere( vertices[ i ][ actualIt ][ 0 ], vertices[ i ][ actualIt ][ 1 ], vertices[ i ][ actualIt ][ 2 ] );
+            drawSphere( vertices[ i ][ actualIt ][ 0 ], vertices[ i ][ actualIt ][ 1 ], vertices[ i ][ actualIt ][ 2 ], 50 );
         }
     }
 }

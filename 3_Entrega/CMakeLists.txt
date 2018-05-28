@@ -13,5 +13,5 @@ endif(PROJECT_BINARY_DIR STREQUAL ${PROJECT_SOURCE_DIR})
 include_directories(${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 
-add_executable(track_lab ${PROJECT_SOURCE_DIR}/src/main.cxx)
+add_executable(track_lab ${PROJECT_SOURCE_DIR}/src/main.cxx ${PROJECT_SOURCE_DIR}/src/track_lab.cxx)
 target_link_libraries(track_lab ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
