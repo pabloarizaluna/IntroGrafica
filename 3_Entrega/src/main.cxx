@@ -7,6 +7,8 @@ bool paused = false;
 
 GLfloat width;
 GLfloat height;
+GLfloat iteration;
+bool running = true;
 
 GLdouble eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ;
 
@@ -24,6 +26,7 @@ GLdouble up_3_X = 0, up_3_Y = 1, up_3_Z = 0;
 
 void init()
 {
+    iteration = 0;
   glClearColor( 1.0, 1.0, 1.0, 0.0 );
   width = 680;
   height = 480;
@@ -107,6 +110,15 @@ void reshape(int n_width, int n_height)
   height = n_height;
 }
 
+void timer( int value ) {
+    if( running ) {
+        iteration += 1;
+    }
+
+    glutPostRedisplay( );
+    glutTimerFunc( 1000.0 / 60.0, timer, 0 );
+}
+
 void keyboard( unsigned char key, int x, int y )
 {
   switch(key)
@@ -165,6 +177,7 @@ int main( int argc, char* argv[] )
   init();
   glutDisplayFunc( display );
   glutReshapeFunc( reshape );
+  glutTimerFunc( 1000.0 / 60.0, timer, 0 );
   glutKeyboardFunc( keyboard );
   glutMainLoop();
 

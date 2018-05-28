@@ -200,3 +200,49 @@ void draw_subject( float x, float y, float z ) {
     drawSphere( 717.0 + x, -3524.0 + y, 0.0 + z, 50 );
     drawLimb( 717.0 + x, -3524.0 + y, -133.0 + z, 270.0, 'y', 75, 400 );
 }
+
+void drawMarkers( int actualIt ) {
+    if( actualIt < vertices.size( ) ) {
+        for( int i = 0; i < vertices.size( ); i++ ) {
+            drawSphere( vertices[ i ][ actualIt ][ 0 ], vertices[ i ][ actualIt ][ 1 ], vertices[ i ][ actualIt ][ 2 ] );
+        }
+    }
+}
+
+void loadFile( ) {
+    std::string line;
+    std::ifstream file( "../markers.in" );
+
+    if( file.is_open( ) ) {
+        std::vector< std::vector < GLfloat > > vertics;
+        while( getline( file, line ) ) {
+            if( line != "SACR" && line != "LASI" && line != "LTHI" && line != "LKNE" && line != "LTIB" && line != "LANK" && line != "LTOE" && line != "RASI" && line != "RTHI" && line != "RKNE" && line != "RTIB" && line != "RANK" && line != "RTOE" ) {
+                std::stringstream ss( line );
+                std::string item;
+                float vert1, vert2, vert3;
+                std::vector< GLfloat > verts;
+
+                getline( ss, item, ' ' );
+                vert1 = std::stof( item );
+                getline( ss, item, ' ' );
+                vert2 = std::stof( item );
+                getline( ss, item, ' ' );
+                vert3 = std::stof( item );
+
+                verts.push_back( vert1 );
+                verts.push_back( vert2 );
+                verts.push_back( vert3 );
+
+                vertics.push_back( verts );
+            }
+            else if( vertics.size( ) == 0 ) {
+                vertices.push_back( vertics );
+                vertics.clear( );
+            }
+        }
+        file.close( );
+      }
+      else {
+        std::cout << "error con el archivo markers.in" << std::endl;
+    }
+}
