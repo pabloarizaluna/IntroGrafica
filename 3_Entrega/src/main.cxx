@@ -26,12 +26,22 @@ GLdouble up_3_X = 0, up_3_Y = 1, up_3_Z = 0;
 
 void init()
 {
-    loadFile( );
-    iteration = 0;
+  loadFile( );
+  iteration = 0;
   glClearColor( 1.0, 1.0, 1.0, 0.0 );
   width = 680;
   height = 480;
   glEnable( GL_DEPTH_TEST );
+
+  eyeX = eye_1_X;
+  eyeY = eye_1_Y;
+  eyeZ = eye_1_Z;
+  centerX = center_1_X;
+  centerY = center_1_Y;
+  centerZ = center_1_Z;
+  upX = up_1_X;
+  upY = up_1_Y;
+  upZ = up_1_Z;
 }
 
 void display()
