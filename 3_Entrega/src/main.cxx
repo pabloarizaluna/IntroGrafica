@@ -26,7 +26,6 @@ GLdouble up_3_X = 0, up_3_Y = 1, up_3_Z = 0;
 
 void init()
 {
-  loadFile( );
   iteration = 0;
   glClearColor( 1.0, 1.0, 1.0, 0.0 );
   width = 680;
@@ -63,6 +62,7 @@ void display()
   glPopMatrix();
 
   drawMarkers( iteration );
+  drawConnectors( iteration );
 
   glPushMatrix();
   glRotatef( 90, 1, 0, 0 );
@@ -87,7 +87,7 @@ void reshape(int n_width, int n_height)
 }
 
 void timer( int value ) {
-    if( !paused ) {
+    if( paused != 0 ) {
         iteration += 1;
     }
 
@@ -149,10 +149,17 @@ void keyboard( unsigned char key, int x, int y )
 int main( int argc, char* argv[] )
 {
   glutInit( &argc, argv );
+
+  if( argc != 2 ) {
+      std::cout << "Error de ejecucion - Modo de uso: ./track_lab archivo_entrada" << std::endl;
+      exit( 1 );
+  }
+
   glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
   glutInitWindowPosition( 100, 100 );
   glutInitWindowSize( 640, 480 );
   glutCreateWindow( "Track Lab" );
+  loadFile( argv[ 1 ] );
   init();
   glutDisplayFunc( display );
   glutReshapeFunc( reshape );
