@@ -52,8 +52,12 @@ void display()
   glEnd();
   glPopMatrix();
 
+  drawMarkers( iteration );
+
+  glPushMatrix();
   glRotatef( 90, 1, 0, 0 );
-  draw_room( 1454, 639, 490, 2.327, 1.485, 1.98 );
+  draw_room( 1454, 2375, 490, 7900, 5250, 10000 );
+  glPopMatrix();
 
   glutSwapBuffers();
 }
@@ -123,7 +127,6 @@ void keyboard( unsigned char key, int x, int y )
     break;
     case 'p': case 'P':
       paused = ( paused + 1 ) % 2;
-      std::cout << paused << std::endl;
     break;
     case 'r': case 'R':
         iteration = 0;
