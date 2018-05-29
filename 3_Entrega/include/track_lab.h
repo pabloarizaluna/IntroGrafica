@@ -34,6 +34,14 @@ void drawSphere( float x, float y, float z, int radius );
 void draw_subject( float x, float y, float z );
 void verifyMarkers( );
 void drawMarkers( int actualIt );
-void loadFile( );
+void loadFile( char* filename );
+void drawConnectors( int actualIt );
+
+/**
+    Render Cylinder Between Points Source
+    https://github.com/curran/renderCyliner/blob/master/renderCylinder.c
+*/
+void renderCylinderDirector(float x1, float y1, float z1, float x2,float y2, float z2, float radius,int subdivisions);
+void renderCylinder(float x1, float y1, float z1, float x2,float y2, float z2, float radius,int subdivisions,GLUquadricObj *quadric);
 
 #endif

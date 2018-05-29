@@ -195,6 +195,78 @@ void draw_subject( float x, float y, float z ) {
     drawLimb( 717.0 + x, -3524.0 + y, -133.0 + z, 270.0, 'y', 75, 400 );
 }
 
+void drawConnectors( int actualIt ) {
+    if( actualIt < vertices[ 0 ].size( ) ) {
+        renderCylinderDirector( vertices[ 0 ][ actualIt ][ 0 ], vertices[ 0 ][ actualIt ][ 1 ], vertices[ 0 ][ actualIt ][ 2 ], vertices[ 1 ][ actualIt ][ 0 ], vertices[ 1 ][ actualIt ][ 1 ], vertices[ 1 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 1 ][ actualIt ][ 0 ], vertices[ 1 ][ actualIt ][ 1 ], vertices[ 1 ][ actualIt ][ 2 ], vertices[ 2 ][ actualIt ][ 0 ], vertices[ 2 ][ actualIt ][ 1 ], vertices[ 2 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 2 ][ actualIt ][ 0 ], vertices[ 2 ][ actualIt ][ 1 ], vertices[ 2 ][ actualIt ][ 2 ], vertices[ 3 ][ actualIt ][ 0 ], vertices[ 3 ][ actualIt ][ 1 ], vertices[ 3 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 3 ][ actualIt ][ 0 ], vertices[ 3 ][ actualIt ][ 1 ], vertices[ 3 ][ actualIt ][ 2 ], vertices[ 4 ][ actualIt ][ 0 ], vertices[ 4 ][ actualIt ][ 1 ], vertices[ 4 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 4 ][ actualIt ][ 0 ], vertices[ 4 ][ actualIt ][ 1 ], vertices[ 4 ][ actualIt ][ 2 ], vertices[ 5 ][ actualIt ][ 0 ], vertices[ 5 ][ actualIt ][ 1 ], vertices[ 5 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 5 ][ actualIt ][ 0 ], vertices[ 5 ][ actualIt ][ 1 ], vertices[ 5 ][ actualIt ][ 2 ], vertices[ 6 ][ actualIt ][ 0 ], vertices[ 6 ][ actualIt ][ 1 ], vertices[ 6 ][ actualIt ][ 2 ], 15, 30 );
+
+        renderCylinderDirector( vertices[ 0 ][ actualIt ][ 0 ], vertices[ 0 ][ actualIt ][ 1 ], vertices[ 0 ][ actualIt ][ 2 ], vertices[ 7 ][ actualIt ][ 0 ], vertices[ 7 ][ actualIt ][ 1 ], vertices[ 7 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 7 ][ actualIt ][ 0 ], vertices[ 7 ][ actualIt ][ 1 ], vertices[ 7 ][ actualIt ][ 2 ], vertices[ 8 ][ actualIt ][ 0 ], vertices[ 8 ][ actualIt ][ 1 ], vertices[ 8 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 8 ][ actualIt ][ 0 ], vertices[ 8 ][ actualIt ][ 1 ], vertices[ 8 ][ actualIt ][ 2 ], vertices[ 9 ][ actualIt ][ 0 ], vertices[ 9 ][ actualIt ][ 1 ], vertices[ 9 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 9 ][ actualIt ][ 0 ], vertices[ 9 ][ actualIt ][ 1 ], vertices[ 9 ][ actualIt ][ 2 ], vertices[ 10 ][ actualIt ][ 0 ], vertices[ 10 ][ actualIt ][ 1 ], vertices[ 10 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 10 ][ actualIt ][ 0 ], vertices[ 10 ][ actualIt ][ 1 ], vertices[ 10 ][ actualIt ][ 2 ], vertices[ 11 ][ actualIt ][ 0 ], vertices[ 11 ][ actualIt ][ 1 ], vertices[ 11 ][ actualIt ][ 2 ], 15, 30 );
+        renderCylinderDirector( vertices[ 11 ][ actualIt ][ 0 ], vertices[ 11 ][ actualIt ][ 1 ], vertices[ 11 ][ actualIt ][ 2 ], vertices[ 12 ][ actualIt ][ 0 ], vertices[ 12 ][ actualIt ][ 1 ], vertices[ 12 ][ actualIt ][ 2 ], 15, 30 );
+    }
+}
+
+void renderCylinder(float x1, float y1, float z1, float x2,float y2, float z2, float radius,int subdivisions,GLUquadricObj *quadric)
+{
+  float vx = x2-x1;
+  float vy = y2-y1;
+  float vz = z2-z1;
+  float v = sqrt( vx*vx + vy*vy + vz*vz );
+  float ax;
+
+  if (fabs(vz) < 1.0e-3) {
+    ax = 57.2957795*acos( vx/v ); // rotation angle in x-y plane
+    if ( vy <= 0.0 )
+      ax = -ax;
+  }
+  else {
+    ax = 57.2957795*acos( vz/v ); // rotation angle
+    if ( vz <= 0.0 )
+      ax = -ax;
+  }
+
+  float rx = -vy*vz;
+  float ry = vx*vz;
+
+  glPushMatrix();
+  //draw the cylinder body
+  glTranslatef( x1,y1,z1 );
+  if (fabs(vz) < 1.0e-3) {
+    glRotated(90.0, 0, 1, 0.0); // Rotate & align with x axis
+    glRotated(ax, -1.0, 0.0, 0.0); // Rotate to point 2 in x-y plane
+  }
+  else {
+    glRotated(ax, rx, ry, 0.0); // Rotate about rotation vector
+  }
+  gluQuadricOrientation(quadric,GLU_OUTSIDE);
+  gluCylinder(quadric, radius, radius, v, subdivisions, 1);
+
+  //draw the first cap
+  gluQuadricOrientation(quadric,GLU_INSIDE);
+  gluDisk( quadric, 0.0, radius, subdivisions, 1);
+  glTranslatef( 0,0,v );
+
+  //draw the second cap
+  gluQuadricOrientation(quadric,GLU_OUTSIDE);
+  gluDisk( quadric, 0.0, radius, subdivisions, 1);
+  glPopMatrix();
+}
+
+void renderCylinderDirector(float x1, float y1, float z1, float x2,float y2, float z2, float radius,int subdivisions)
+{
+    glColor3f( 1.0, 0.0, 0.0 );
+  GLUquadricObj *quadric=gluNewQuadric();
+  gluQuadricNormals(quadric, GLU_SMOOTH);
+  renderCylinder(x1,y1,z1,x2,y2,z2,radius,subdivisions,quadric);
+}
+
 void drawMarkers( int actualIt ) {
     if( actualIt < vertices[ 0 ].size( ) ) {
         for( int i = 0; i < vertices.size( ); i++ ) {
@@ -215,9 +287,9 @@ void verifyMarkers( ) {
     }
 }
 
-void loadFile( ) {
+void loadFile( char* filename ) {
     std::string line;
-    std::ifstream file( "../markers.in" );
+    std::ifstream file( filename );
 
     if( file.is_open( ) ) {
         std::vector< std::vector < GLfloat > > vertics;
@@ -250,6 +322,6 @@ void loadFile( ) {
         file.close( );
       }
       else {
-        std::cout << "error con el archivo markers.in" << std::endl;
+        std::cout << "error con el archivo de entrada" << std::endl;
     }
 }
