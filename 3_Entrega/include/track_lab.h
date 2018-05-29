@@ -32,6 +32,7 @@ void draw_window(
 void drawLimb( float x, float y, float z, float angle, char axis, int base, int height );
 void drawSphere( float x, float y, float z, int radius );
 void draw_subject( float x, float y, float z );
+void verifyMarkers( );
 void drawMarkers( int actualIt );
 void loadFile( );
 
