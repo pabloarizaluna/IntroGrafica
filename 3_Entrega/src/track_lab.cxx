@@ -126,34 +126,6 @@ void draw_window(
   glPopMatrix();
 }
 
-void drawLimb( float x, float y, float z, float angle, char axis, int base, int height ) {
-    glColor3f( 1.0f, 0.0f, 0.0f );
-    glPushMatrix( );
-
-    glTranslatef( x, y, z );
-
-    if( axis == 'x' ) {
-        glRotatef( angle, 1.0f, 0.0f, 0.0f );
-    }
-    else if( axis == 'y' ) {
-        glRotatef( angle, 0.0f, 1.0f, 0.0f );
-    }
-    else if( axis == 'z' ) {
-        glRotatef( angle, 0.0f, 0.0f, 1.0f );
-    }
-
-    glRotatef( 90.0, 0.0, 1.0, 0.0 );
-
-
-    glutWireCone( base, height/3, 20, 20 );
-
-    glRotatef( 180.0, 0.0f, 1.0f, 0.0f );
-
-    glutWireCone( base, 2*(height/3), 20, 20 );
-
-    glPopMatrix( );
-}
-
 void drawSphere( float x, float y, float z, int radius ) {
     glColor3f( 1.0, 0.0, 1.0 );
     glPushMatrix( );
@@ -163,36 +135,6 @@ void drawSphere( float x, float y, float z, int radius ) {
     glutWireSphere( radius, 20, 20 );
 
     glPopMatrix( );
-}
-
-void draw_subject( float x, float y, float z ) {
-    drawLimb( 0.0 + x, 500.0 + y, 0.0 + z, 90.0, 'z', 250, 750 );
-    drawSphere( 0.0 + x, 0.0 + y, 0.0 + z, 50 );
-
-    drawLimb( -288.0 + x, -167.0 + y, 0.0 + z, 30.0, 'z', 100, 1000 );
-    drawSphere( -866.0 + x, -500.0 + y, 0.0 + z, 50 );
-    drawLimb( -866.0 + x, -750.0 + y, 0.0 + z, 90.0, 'z', 100, 750 );
-    drawSphere( -866.0 + x, -1250.0 + y, 0.0 + z, 50 );
-
-    drawLimb( 288.0 + x, -167.0 + y, 0.0 + z, 150.0, 'z', 100, 1000 );
-    drawSphere( 866.0 + x, -500.0 + y, 0.0 + z, 50 );
-    drawLimb( 866.0 + x, -750.0 + y, 0.0 + z, 90.0, 'z', 100, 750 );
-    drawSphere( 866 + x, -1250.0 + y, 0.0 + z, 50 );
-
-    drawLimb( 0.0 + x, -500.0 + y, 0.0 + z, 90.0, 'z', 300, 1500 );
-    drawSphere( 0.0 + x, -1500.0 + y, 0.0 + z, 50 );
-
-    drawLimb( -239.0 + x, -1842.0 + y, 0.0 + z, 55.0, 'z', 175, 1250 );
-    drawSphere( -717.0 + x, -2524.0 + y, 0.0 + z, 50 );
-    drawLimb( -717.0 + x, -2857.0 + y, 0.0 + z, 90.0, 'z', 125, 1000 );
-    drawSphere( -717.0 + x, -3524.0 + y, 0.0 + z, 50 );
-    drawLimb( -717.0 + x, -3524.0 + y, -133.0 + z, 270.0, 'y', 75, 400 );
-
-    drawLimb( 239.0 + x, -1842.0 + y, 0.0, 125.0 + z, 'z', 175, 1250 );
-    drawSphere( 717.0 + x, -2524.0 + y, 0.0 + z, 50 );
-    drawLimb( 717.0 + x, -2857.0 + y, 0.0 + z, 90.0, 'z', 125, 1000 );
-    drawSphere( 717.0 + x, -3524.0 + y, 0.0 + z, 50 );
-    drawLimb( 717.0 + x, -3524.0 + y, -133.0 + z, 270.0, 'y', 75, 400 );
 }
 
 void drawConnectors( int actualIt ) {
@@ -213,7 +155,9 @@ void drawConnectors( int actualIt ) {
     }
 }
 
-void renderCylinder(float x1, float y1, float z1, float x2,float y2, float z2, float radius,int subdivisions,GLUquadricObj *quadric)
+void renderCylinder(float x1, float y1, float z1, float x2,float y2, float z2,
+  float radius,int subdivisions,GLUquadricObj *quadric
+  )
 {
   float vx = x2-x1;
   float vy = y2-y1;
@@ -259,7 +203,9 @@ void renderCylinder(float x1, float y1, float z1, float x2,float y2, float z2, f
   glPopMatrix();
 }
 
-void renderCylinderDirector(float x1, float y1, float z1, float x2,float y2, float z2, float radius,int subdivisions)
+void renderCylinderDirector(float x1, float y1, float z1, float x2,float y2,
+  float z2, float radius,int subdivisions
+  )
 {
     glColor3f( 1.0, 0.0, 0.0 );
   GLUquadricObj *quadric=gluNewQuadric();
@@ -272,18 +218,6 @@ void drawMarkers( int actualIt ) {
         for( int i = 0; i < vertices.size( ); i++ ) {
             drawSphere( vertices[ i ][ actualIt ][ 0 ], vertices[ i ][ actualIt ][ 1 ], vertices[ i ][ actualIt ][ 2 ], 20 );
         }
-    }
-}
-
-void verifyMarkers( ) {
-    for( int i = 0; i < vertices.size( ); i++ ) {
-        std::vector< std::vector< GLfloat > > v = vertices[ i ];
-
-        for( int j = 0; j < v.size( ); j++ ) {
-            std::cout << v[ j ][ 0 ] << " " << v[ j ][ 1 ] << " " << v[ j ][ 2 ] << std::endl;
-        }
-
-        std::cout << " Cambio de Hueso " << std::endl;
     }
 }
 
