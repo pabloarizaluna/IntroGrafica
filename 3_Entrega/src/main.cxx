@@ -73,7 +73,7 @@ void reshape(int n_width, int n_height)
 }
 
 void timer( int value ) {
-    if( !paused ) {
+    if( paused != 0 ) {
         iteration += 1;
     }
 
